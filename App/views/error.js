@@ -3,18 +3,20 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
 var errorsTemplate = require('../Templates/error.hbs');
+var behavior = require('../behaviors/modal.js');
+
 
 var errorModal = Backbone.Marionette.ItemView.extend({
   className: 'backdrop',
-  triggers: {
-    'click .close': 'close',
-    'click': 'close'
+  ui: {
+    'test': '.test',
+    'close': '.close'
   },
-  events: {
-    'click .results': function(e) {
-      e.stopPropagation();
-    },
-    'click button': 'advanceStep'
+  behaviors: {
+    test: {
+      behaviorClass: behavior,
+      message: 'hi thereee'
+    }
   },
   template: function(data) {
     console.log(data.error);
