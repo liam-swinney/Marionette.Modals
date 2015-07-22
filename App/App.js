@@ -1,11 +1,7 @@
-var $ = require('jquery');
-var Backbone = require('backbone');
+import Marionette from 'backbone.marionette';
+import ModalRegion from './Regions/Modal.js';
 
-Backbone.$ = $;
-
-var Marionette = require('backbone.marionette');
-var ModalRegion = require('./Regions/Modal.js');
-var MyApp = new Marionette.Application();
+let MyApp = new Marionette.Application();
 
 MyApp.addRegions({
   modal: ModalRegion

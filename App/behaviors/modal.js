@@ -1,11 +1,9 @@
 'use strict';
 
-var $ = require('jquery');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var Marionette = require('backbone.marionette');
+import $ from 'jquery';
+import Marionette from 'backbone.marionette';
 
-var ModalBehavior = Marionette.Behavior.extend({
+let ModalBehavior = Marionette.Behavior.extend({
   events: {
     'click @ui.test': 'test',
     'click @ui.close': 'close',
@@ -15,17 +13,36 @@ var ModalBehavior = Marionette.Behavior.extend({
     }
   },
 
+  keyEvents: function(e) {
+    if (e.keyCode === 27) {
+      alert('pressed esc');
+      this.close();
+    }
+  },
+  onShow: function() {
+    let _this = this;
+
+    window.addEventListener('keyup', function(e) {
+      if (e.keyCode === 27) {
+        console.log('vanilla');
+        _this.close();
+      }
+    });
+  },
   test: function() {
-    alert('hi!' + this.options.message)
+    console.log(this.view);
+    alert('hi!' + this.options.message);
   },
   close: function() {
-    var transitions = 'transitionend webkitTransitionEnd';
-    var self = this;
+    let transitions = 'transitionend webkitTransitionEnd';
+    let _this = this;
 
     this.$el.addClass('hide').off(transitions).on(transitions, function() {
       $(this).off(transitions);
-      self.empty(); // Clear the view
+
+      _this.view.destroy(); // Clear the view
     });
+
   }
 });
 module.exports = ModalBehavior;
